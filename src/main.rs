@@ -144,11 +144,12 @@ async fn main(_spawner: Spawner) {
     ws2812.write(&[(0,0,0).into()]).await;
     Timer::after_secs(1).await;
 
-    // RED
-    ws2812.write(&[(0,255,0).into()]).await;
-    Timer::after_secs(1).await;
-
     loop {
+	// RED
+	ws2812.write(&[(0,255,0).into()]).await;
+	Timer::after_secs(1).await;
+
+	led1.set_high();
 	gpio1.set_high();
 	Timer::after_secs(2).await;
 	gpio1.set_low();
@@ -165,5 +166,9 @@ async fn main(_spawner: Spawner) {
 	Timer::after_secs(2).await;
 	gpio3.set_low();
 	led3.set_low();
+
+	// BLUE
+	ws2812.write(&[(0,0,255).into()]).await;
+	Timer::after_secs(1).await;
     }
 }
