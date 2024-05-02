@@ -14,8 +14,7 @@ use embassy_time::{Timer};
 
 use {defmt_rtt as _, panic_probe as _};
 
-pub mod ws2812;
-use crate::ws2812::Ws2812;
+use ws2812;
 
 bind_interrupts!(struct Irqs {
     PIO0_IRQ_0 => InterruptHandler<PIO0>;
@@ -29,13 +28,13 @@ async fn main(_spawner: Spawner) {
 
     let p = embassy_rp::init(Default::default());
     let Pio { mut common, sm0, .. } = Pio::new(p.PIO0, Irqs);
-    let mut ws2812 = Ws2812::new(&mut common, sm0, p.DMA_CH0, p.PIN_15);
+    let mut ws2812 = ws2812::Ws2812::new(&mut common, sm0, p.DMA_CH0, p.PIN_15);
 
     // =====
 
     let mut gpio1 = Output::new(p.PIN_18, Level::Low);
     let mut gpio2 = Output::new(p.PIN_19, Level::Low);
-    let mut gpio3 = Output::new(p.PIN_28, Level::Low);
+    let mut gpio3 = Output::new(p.PIN_22, Level::Low);
 
     let mut led1 = Output::new(p.PIN_6, Level::Low);
     let mut led2 = Output::new(p.PIN_7, Level::Low);
