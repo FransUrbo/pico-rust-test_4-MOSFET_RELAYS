@@ -48,7 +48,7 @@ async fn main(_spawner: Spawner) {
 
     loop {
 	// RED
-	ws2812.write(&[(0,255,0).into()]).await;
+	ws2812.write(&[(255,0,0).into()]).await;
 	Timer::after_secs(1).await;
 
 	led1.set_high();
